@@ -1,3 +1,5 @@
+//map of all cocktails
+//Make sure that key is the same as search parameter of url when adding new cocktails
 const cocktails = {
   caipirinha: "Caipirinha",
   bluelagoon: "Blue Lagoon",
@@ -5,10 +7,11 @@ const cocktails = {
   tequilasunrise: "Tequila Sunrise",
   zombie: "Zombie",
 };
+
 const urlParams = new URLSearchParams(window.location.search);
 const cocktailNameUrl = urlParams.get("name");
-const cocktailImage = "../images/" + cocktailNameUrl + "Image.webp";
 
+const cocktailImage = "../images/" + cocktailNameUrl + "Image.webp";
 const cocktailName = cocktails[cocktailNameUrl];
 
 const cocktailImageElement = document.getElementById("cocktail-image");
@@ -17,17 +20,10 @@ const cocktailDescriptionElement = document.getElementById(
   "cocktail-description"
 );
 
-const socket = io("https://lehre.bpm.in.tum.de/ports/13741");
-
-socket.connect();
-
-socket.on("statusChange", function (data) {
-  alert(`Status of your order ${data.orderId} has changed to ${data.status}.`);
-});
-
 cocktailImageElement.src = cocktailImage;
 cocktailNameElement.textContent = cocktailName;
 
+//fetch descriptions from markdown file
 fetch("../descriptions/" + cocktailNameUrl + "Description.md")
   .then((response) => response.text())
   .then((markdownText) => {
@@ -46,6 +42,7 @@ orderButton.addEventListener("click", () => {
   submitOrder(cocktailName);
 });
 
+//submitting order to backend
 async function submitOrder(cocktail) {
   console.log(JSON.stringify({ cocktail: cocktail }));
   await fetch("https://lehre.bpm.in.tum.de/ports/13741/order", {
@@ -60,7 +57,9 @@ async function submitOrder(cocktail) {
       console.log(data);
       if (data.id) {
         alert(`Order placed successfully. Your order ID is ${data.id}.`);
-        //socket.emit("registerOrder", { orderId: data.id });
+        //Make order button unavailable after successful order
+        orderButton.disabled = true;
+        orderButton.style.display = "none";
       } else {
         alert("Could not place order.");
       }
