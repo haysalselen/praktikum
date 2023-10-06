@@ -1,5 +1,20 @@
 # Fuzzy Drinks
 
+- [Fuzzy Drinks](#fuzzy-drinks)
+  - [Motivation](#motivation)
+  - [How to run](#how-to-run)
+  - [Folders and files](#folders-and-files)
+    - [descriptions](#descriptions)
+    - [images](#images)
+    - [QR-Codes](#qr-codes)
+    - [src](#src)
+    - [cpee-graph.xml](#cpee-graphxml)
+  - [Naming Scheme](#naming-scheme)
+  - [Adding a Cocktail](#adding-a-cocktail)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+  - [CPEE](#cpee)
+
 ## Motivation
 
 ## How to run
