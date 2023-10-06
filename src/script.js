@@ -11,7 +11,29 @@ const cocktails = {
 const urlParams = new URLSearchParams(window.location.search);
 const cocktailNameUrl = urlParams.get("name");
 
-const cocktailImage = "../images/" + cocktailNameUrl + "Image.webp";
+//Cocktail image with common image formas
+const cocktailImage = null;
+const supportedFormats = ["webp", "jpg", "jpeg", "png", "gif"];
+
+for (const format of supportedFormats) {
+  const imageUrl = `../images/${cocktailNameUrl}Image.${format}`;
+
+  // Check if the image exists
+  const imageExists = checkIfImageExists(imageUrl);
+
+  if (imageExists) {
+    cocktailImage = imageUrl;
+    break; // Stop searching once a valid image is found
+  }
+}
+
+// Function to check if an image exists
+function checkIfImageExists(url) {
+  const img = new Image();
+  img.src = url;
+  return img.complete;
+}
+
 const cocktailName = cocktails[cocktailNameUrl];
 
 const cocktailImageElement = document.getElementById("cocktail-image");
