@@ -11,39 +11,42 @@ const cocktails = {
 const urlParams = new URLSearchParams(window.location.search);
 const cocktailNameUrl = urlParams.get("name");
 
-//Cocktail image with common image formas
-const cocktailImage = null;
-const supportedFormats = ["webp", "jpg", "jpeg", "png", "gif"];
-
-for (const format of supportedFormats) {
-  const imageUrl = `../images/${cocktailNameUrl}Image.${format}`;
-
-  // Check if the image exists
-  const imageExists = checkIfImageExists(imageUrl);
-
-  if (imageExists) {
-    cocktailImage = imageUrl;
-    break; // Stop searching once a valid image is found
-  }
-}
-
-// Function to check if an image exists
-function checkIfImageExists(url) {
-  const img = new Image();
-  img.src = url;
-  return img.complete;
-}
-
 const cocktailName = cocktails[cocktailNameUrl];
-
 const cocktailImageElement = document.getElementById("cocktail-image");
 const cocktailNameElement = document.getElementById("cocktail-name");
 const cocktailDescriptionElement = document.getElementById(
   "cocktail-description"
 );
-
-cocktailImageElement.src = cocktailImage;
 cocktailNameElement.textContent = cocktailName;
+
+//Cocktail image with common image formas
+let cocktailImage = null;
+const supportedFormats = ["webp", "jpg", "jpeg", "png", "gif", "svg"];
+
+//Load image function
+function loadNextImage(index) {
+  if (index >= supportedFormats.length) {
+    //No valid image found in any format
+    return;
+  }
+
+  const imageUrl = `../images/${cocktailNameUrl}Image.${supportedFormats[index]}`;
+
+  var img = new Image();
+  img.src = imageUrl;
+
+  // Check if the image exists
+  img.onload = function () {
+    cocktailImageElement.src = imageUrl;
+  };
+
+  //Image does not exist in this format, try the next one
+  img.onerror = function () {
+    loadNextImage(index + 1);
+  };
+}
+
+loadNextImage(0);
 
 //fetch descriptions from markdown file
 fetch("../descriptions/" + cocktailNameUrl + "Description.md")
