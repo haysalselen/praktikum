@@ -91,7 +91,7 @@ async function submitOrder(cocktail) {
     })
     .catch((error) => {
       console.log("Order submission error:", error);
-      alert("Error submitting order");
+      alert("Error submitting order. Please try again in a few minutes.");
     });
 }
 
