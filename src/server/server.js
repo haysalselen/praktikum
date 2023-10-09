@@ -57,7 +57,7 @@ app.get("/work-order", (req, res) => {
 
   // Check if there are open orders in the database
   db.get(
-    "SELECT * FROM orders WHERE status = 'open' ORDER BY timestamp ASC LIMIT 1",
+    "SELECT * FROM orders WHERE status = 'queued' ORDER BY timestamp ASC LIMIT 1",
     (err, row) => {
       if (err) {
         console.error("Failed to check for orders");
