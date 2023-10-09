@@ -35,10 +35,10 @@ app.post("/order", (req, res) => {
     return res.status(400).json({ error: "Cocktail name is required" });
   }
 
-  // Insert the order into the database with status 'open'
+  // Insert the order into the database with status 'queued'
   db.run(
     "INSERT INTO orders (details, status) VALUES (?, ?)",
-    [cocktail, "open"],
+    [cocktail, "queued"],
     function (err) {
       if (err) {
         return res.status(500).json({ error: "Failed to create order" });
@@ -55,7 +55,7 @@ app.post("/order", (req, res) => {
 app.get("/work-order", (req, res) => {
   console.log("Start order preparing");
 
-  // Check if there are open orders in the database
+  // Check if there are queued orders in the database
   db.get(
     "SELECT * FROM orders WHERE status = 'queued' ORDER BY timestamp ASC LIMIT 1",
     (err, row) => {
@@ -72,12 +72,12 @@ app.get("/work-order", (req, res) => {
           req.headers["cpee-callback"],
         ]);
         console.log(`Callback address ${req.headers["cpee-callback"]} stored!`);
-        // No open orders found, send the callback header
+        // No queued orders found, send the callback header
         res.setHeader("CPEE-UPDATE", "TRUE");
         return res.status(200).send();
       }
 
-      // Found an open order, update its status to 'processing' and send it as a response
+      // Found an queued order, update its status to 'processing' and send it as a response
       db.run(
         "UPDATE orders SET status = 'processing' WHERE id = ?",
         [row.id],
@@ -136,10 +136,10 @@ eventEmitter.on("orderAvailable", () => {
     //if a callback is waiting serve it new order
     if (callbackRow) {
       console.log(`Callback address ${callbackRow.address} exists`);
-      // Found an open order, update its status to 'processing' and send it as a response
+      // Found an queued order, update its status to 'processing' and send it as a response
       db.get(
         "SELECT * FROM orders WHERE status = ? ORDER BY timestamp ASC LIMIT 1",
-        ["open"],
+        ["queued"],
         (err, orderRow) => {
           if (err) {
             console.error("Failed to check for work orders: ", err);
