@@ -17,6 +17,11 @@
 
 ## Motivation
 
+In the context of this project, our primary goal is to introduce an interactive and fun way to order cocktails using QR codes. To achieve this, we've designed elegantly crafted QR codes, each tailored to a specific cocktail. These QR codes, when scanned, seamlessly guide users to a dedicated web component containing comprehensive details about the cocktail. From this interface, placing an order is effortless and user-friendly.
+
+To ensure the smooth and effective management of these orders, we've developed a resilient backend system. This backend system exposes a series of endpoints that facilitate interaction with our Cloud Process Execution Engine (CPEE). Following this documentation, you can find detailed information on the specifics of our system's implementation. 
+
+
 ## How to run
 
 1. Deploy the `descriptions`, `images` and `src` folder on your server e.g. [lehre.bpm.in.tum.de](https://lehre.bpm.in.tum.de/)
@@ -109,5 +114,44 @@ The frontend, while minimalistic, consists of all the necessary information and 
 After clicking the "Order Now" button the user is propted with an alert showcasing that either they sucessufly ordered the cocktail and assignes them an ID. After a sucessful order the "Order Now" button will no longer be available. If the order was not sucessful the user will get an Error alert, telling them that an error occured and to please try again in a few minutes.
 
 ## Backend
+
+The backend code provides the essential functionality for receiving, processing, and managing cocktail orders. 
+
+1. Dependencies: Express is used to create a server, while sqlite3 manages the SQLite database. Cors ensures secure communication between the server and the frontend, allowing requests only from a specific origin (https://lehre.bpm.in.tum.de). Axios is employed for making HTTP requests, and EventEmitter facilitates event-driven programming that is necessary for triggering specific actions in response to arrival of new orders and callback requests from CPEE.
+
+2. Database Initialization/Management: The code includes a database file "database.db" where it is connected to store and manage orders and callback addresses using SQLite. It establishes two tables:
+
+- orders:
+
+| Field Name | Data Type | Description                           |
+|------------|-----------|---------------------------------------|
+| id         | INTEGER   | Unique auto-incrementing order ID    |
+| details    | TEXT      | Description/details of the cocktail  |
+| status     | TEXT      | Order status (defaulted to 'queued')  |
+| timestamp  | DATETIME  | Timestamp of when the order was created |
+
+- callbacks:
+
+| Field Name | Data Type | Description                            |
+|------------|-----------|----------------------------------------|
+| id         | INTEGER   | Unique auto-incrementing callback ID  |
+| address    | TEXT      | Callback address for future reference |
+
+
+3. API Routes: The backend exposes several API routes to facilitate various aspects of the cocktail ordering process:
+
+- `/order`: This endpoint handles the creation of new cocktail orders. It validates the request checking that the cocktail field is provided. Then, it inserts the order into the database, and triggers the "orderAvailable" event.
+
+- `/work-order`: This endpoint is responsible for checking and processing work orders. It checks for open orders in the "orders" table, prioritizing the oldest order based on its timestamp. In the absence of open orders, the route stores the provided callback address in the "callbacks" table for future reference. When an open order is detected, the route updates the order's status to 'processing' and sends the order details as a JSON response.
+
+- `/finished/:id`: This route allows the marking of an order as 'finished' by specifying its unique ID as a URL parameter.
+
+4. Code Flow and Event Handling: The backend employs an event-driven architecture using EventEmitter to manage the "orderAvailable" event. This event serves as a crucial mechanism for signaling the arrival of a new order. The associated event listener checks for pending callback addresses in the "callbacks" table. When a callback address is found, the listener retrieves the oldest open order, updates its status to 'processing,' and transmits the order details to the callback address through an HTTP PUT request. Subsequently, the served callback address is deleted from the "callbacks" table, ensuring that each callback is processed only once.
+
+
+
+
+
+ 
 
 ## CPEE
