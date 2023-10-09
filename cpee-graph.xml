@@ -1,8 +1,8 @@
 <testset xmlns="http://cpee.org/ns/properties/2.0">
   <executionhandler>ruby</executionhandler>
   <dataelements>
-    <finish>{"message":"Order id 1 marked as finished"}</finish>
-    <order>{"id":1,"cocktailName":"Caipirinha","status":"processing"}</order>
+    <order/>
+    <finish/>
   </dataelements>
   <endpoints>
     <user>https-post://cpee.org/services/timeout-user.php</user>
@@ -117,7 +117,6 @@
           </documentation>
         </call>
       </loop>
-      <stop id="a1"/>
     </description>
   </description>
   <transformation>
