@@ -29,7 +29,7 @@ To ensure the smooth and effective management of these orders, we've developed a
 3. Run `npm i`
 4. Run `node server.js` to start the server
 5. Scan the QR-Code of your preferred cocktail
-6. Click "Oder now" to order your cocktail
+6. Click "Order now" to order your cocktail
 
 ## Folders and files
 
