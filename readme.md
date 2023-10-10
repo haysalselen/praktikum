@@ -170,6 +170,14 @@ The CPEE graph operates via a sequence of two primary service calls with scripts
 
 - The first service call involves fetching an order using the [GET endpoint](#work-order) provided by the backend system. When this endpoint is activated, it attempts to dispatch a drink order to the CPEE if an order is available. In cases where no order is currently available, the callback address from the corresponding CPEE call is stored for potential use in future orders.
 
-- Following the first one, a [second service call](#finishedid) finalizes the processing of the order and marks it as finished.
+- Ideally, there should be an additional step after retrieving the order, where the cocktail is prepared and served. However, it's important to note that this particular aspect falls outside the scope of our project.
+
+- Following these steps, a [second service call](#finishedid) finalizes the processing of the order and marks it as finished. 
+
+<img width="508" alt="cpee-final2" src="https://github.com/haysalselen/praktikum/assets/117772399/30a282cf-4fe4-401e-a958-dfdeecfba356">
+
+_In this service call, for retrieving the ID of the order currently being processed and subsequently incorporating it into the corresponding service call, a prepare statement is used as demonstrated above._
 
 <img width="576" alt="cpee-final1" src="https://github.com/haysalselen/praktikum/assets/117772399/106db6c9-d081-4448-8ecc-ce4db1cc08d9">
+
+_The following data elements are retrieved after a successful ordering of a zombie cocktail._
