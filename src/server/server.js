@@ -131,8 +131,6 @@ eventEmitter.on("orderAvailable", () => {
       console.error("Failed to check for callback addresses: ", err);
     }
 
-    console.log("Callbackrow: ", callbackRow);
-
     //if a callback is waiting serve it new order
     if (callbackRow) {
       console.log(`Callback address ${callbackRow.address} exists`);
