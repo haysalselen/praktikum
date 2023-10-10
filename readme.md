@@ -17,9 +17,9 @@
 
 ## Motivation
 
-In the context of this project, our primary goal is to introduce an interactive and fun way to order cocktails using QR codes. To achieve this, we've designed elegantly crafted QR codes, each tailored to a specific cocktail. These QR codes, when scanned, seamlessly guide users to a dedicated web component containing comprehensive details about the cocktail. From this interface, placing an order is effortless and user-friendly.
+In the context of this project, our primary goal is to introduce an interactive and fun way to order cocktails using QR codes. To achieve this, we've designed elegantly crafted QR codes, each tailored to a specific cocktail. These [QR codes](#qr-codes), when scanned, seamlessly guide users to a dedicated [web component](#frontend) containing comprehensive details about the cocktail. From this interface, placing an order is effortless and user-friendly.
 
-To ensure the smooth and effective management of these orders, we've developed a resilient backend system. This backend system exposes a series of endpoints that facilitate interaction with our Cloud Process Execution Engine (CPEE). Following this documentation, you can find detailed information on the specifics of our system's implementation. 
+To ensure the smooth and effective management of these orders, we've developed a resilient [backend system](#backend). This backend system exposes a series of endpoints that facilitate interaction with our [Cloud Process Execution Engine (CPEE)](#cpee). Following this documentation, you can find detailed information on the specifics of our system's implementation. 
 
 
 ## How to run
@@ -112,6 +112,17 @@ The frontend, while minimalistic, consists of all the necessary information and 
 - Convenience: It streamlines the user experience by offering a direct path to order the cocktail without having to search for how to do so.
 
 After clicking the "Order Now" button the user is propted with an alert showcasing that either they sucessufly ordered the cocktail and assignes them an ID. After a sucessful order the "Order Now" button will no longer be available. If the order was not sucessful the user will get an Error alert, telling them that an error occured and to please try again in a few minutes.
+
+*The following screenshots illustrate the user workflow in the frontend application. This flow begins with scanning a QR code to order a zombie cocktail and progresses to the cocktail description page.*
+
+<img src="https://github.com/haysalselen/praktikum/assets/117772399/409b8181-2797-4125-8746-f09f294b33fb" alt="screenshot0" width="280.416666667" height="576.666666667"/>
+<img src="https://github.com/haysalselen/praktikum/assets/117772399/6631218f-a4c8-4c1f-990c-cdd694d47fa0" alt="screenshot1" width="280.416666667" height="576.666666667"/>
+<img src="https://github.com/haysalselen/praktikum/assets/117772399/114d8d7f-e62e-4d4f-9d90-a1e7749ee901" alt="screenshot2" width="280.416666667" height="576.666666667"/>
+
+*When the order is successful, the user will promptly receive their unique order ID, while in the event of any issues, an error message will be displayed.*
+
+<img src="https://github.com/haysalselen/praktikum/assets/117772399/488128f1-1321-4902-9f47-6e3a1de4ca20" alt="screenshot3" width="280.416666667" height="576.666666667"/>
+<img src="https://github.com/haysalselen/praktikum/assets/117772399/634ef3de-a007-405b-9f6b-b246ff3690e6" alt="screenshot4" width="280.416666667" height="576.666666667"/>
 
 ## Backend
 
