@@ -151,11 +151,14 @@ The backend code provides the essential functionality for receiving, processing,
 
 3. API Routes: The backend exposes several API routes to facilitate various aspects of the cocktail ordering process:
 
-- `/order`: This endpoint handles the creation of new cocktail orders. It validates the request checking that the cocktail field is provided. Then, it inserts the order into the database, and triggers the "orderAvailable" event.
+- #### `/order`
+  This endpoint handles the creation of new cocktail orders. It validates the request checking that the cocktail field is provided. Then, it inserts the order into the database, and triggers the "orderAvailable" event.
 
-- `/work-order`: This endpoint is responsible for checking and processing work orders. It checks for open orders in the "orders" table, prioritizing the oldest order based on its timestamp. In the absence of open orders, the route stores the provided callback address in the "callbacks" table for future reference. When an open order is detected, the route updates the order's status to 'processing' and sends the order details as a JSON response.
+- #### `/work-order`
+  This endpoint is responsible for checking and processing work orders. It checks for open orders in the "orders" table, prioritizing the oldest order based on its timestamp. In the absence of open orders, the route stores the provided callback address in the "callbacks" table for future reference. When an open order is detected, the route updates the order's status to 'processing' and sends the order details as a JSON response.
 
-- `/finished/:id`: This route allows the marking of an order as 'finished' by specifying its unique ID as a URL parameter.
+- #### `/finished/:id`:
+  This route allows the marking of an order as 'finished' by specifying its unique ID as a URL parameter.
 
 4. Code Flow and Event Handling: The backend employs an event-driven architecture using EventEmitter to manage the "orderAvailable" event. This event serves as a crucial mechanism for signaling the arrival of a new order. The associated event listener checks for pending callback addresses in the "callbacks" table. When a callback address is found, the listener retrieves the oldest open order, updates its status to 'processing,' and transmits the order details to the callback address through an HTTP PUT request. Subsequently, the served callback address is deleted from the "callbacks" table, ensuring that each callback is processed only once.
 
@@ -165,9 +168,9 @@ The backend code provides the essential functionality for receiving, processing,
 
 The CPEE graph operates via a sequence of two primary service calls with scripts, executed within a loop.
 
-- The first service call involves fetching an order using the GET endpoint provided by the backend system. When this endpoint is activated, it attempts to dispatch a drink order to the CPEE if an order is available. In cases where no order is currently available, the callback address from the corresponding CPEE call is stored for potential use in future orders.
+- The first service call involves fetching an order using the [GET endpoint](#work-order) provided by the backend system. When this endpoint is activated, it attempts to dispatch a drink order to the CPEE if an order is available. In cases where no order is currently available, the callback address from the corresponding CPEE call is stored for potential use in future orders.
 
-- Following the first one, a second service call finalizes the processing of the order and marks it as finished.
+- Following the first one, a [second service call](#finishedid) finalizes the processing of the order and marks it as finished.
 
 <img width="576" alt="cpee-final1" src="https://github.com/haysalselen/praktikum/assets/117772399/106db6c9-d081-4448-8ecc-ce4db1cc08d9">
 
