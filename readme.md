@@ -165,7 +165,7 @@ The backend code provides the essential functionality for receiving, processing,
 
 The CPEE graph operates via a sequence of two primary service calls with scripts, executed within a loop.
 
-- The first service call involves fetching an order using the GET endpoint provided by the backend system, accessible at [https://lehre.bpm.in.tum.de/ports/13741/work-order](https://lehre.bpm.in.tum.de/ports/13741/work-order). When this endpoint is activated, it attempts to dispatch a drink order to the CPEE if an order is available. In cases where no order is currently available, the callback address from the corresponding CPEE call is stored for potential use in future orders.
+- The first service call involves fetching an order using the GET endpoint provided by the backend system. When this endpoint is activated, it attempts to dispatch a drink order to the CPEE if an order is available. In cases where no order is currently available, the callback address from the corresponding CPEE call is stored for potential use in future orders.
 
 - Following the first one, a second service call finalizes the processing of the order and marks it as finished.
 
