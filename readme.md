@@ -138,7 +138,7 @@ The backend code provides the essential functionality for receiving, processing,
 |------------|-----------|---------------------------------------|
 | id         | INTEGER   | Unique auto-incrementing order ID    |
 | details    | TEXT      | Description/details of the cocktail  |
-| status     | TEXT      | Order status (defaulted to 'queued')  |
+| status     | TEXT      | Order status (defaulted to 'queued', 'processing', 'finished')  |
 | timestamp  | DATETIME  | Timestamp of when the order was created |
 
 - callbacks:
@@ -159,10 +159,22 @@ The backend code provides the essential functionality for receiving, processing,
 
 4. Code Flow and Event Handling: The backend employs an event-driven architecture using EventEmitter to manage the "orderAvailable" event. This event serves as a crucial mechanism for signaling the arrival of a new order. The associated event listener checks for pending callback addresses in the "callbacks" table. When a callback address is found, the listener retrieves the oldest open order, updates its status to 'processing,' and transmits the order details to the callback address through an HTTP PUT request. Subsequently, the served callback address is deleted from the "callbacks" table, ensuring that each callback is processed only once.
 
-
-
-
-
- 
-
 ## CPEE
+
+<img width="226" alt="cpee-final" src="https://github.com/haysalselen/praktikum/assets/117772399/0e050c57-4893-4bc8-aabb-a564576e0cc3">
+
+The CPEE graph operates via a sequence of two primary service calls with scripts, executed within a loop.
+
+- The first service call involves fetching an order using the GET endpoint provided by the backend system, accessible at [https://lehre.bpm.in.tum.de/ports/13741/work-order](https://lehre.bpm.in.tum.de/ports/13741/work-order). When this endpoint is activated, it attempts to dispatch a drink order to the CPEE if an order is available. In cases where no order is currently available, the callback address from the corresponding CPEE call is stored for potential use in future orders.
+
+- Following the first one, a second service call finalizes the processing of the order and marks it as finished.
+
+<img width="576" alt="cpee-final1" src="https://github.com/haysalselen/praktikum/assets/117772399/106db6c9-d081-4448-8ecc-ce4db1cc08d9">
+
+
+
+
+
+
+
+
