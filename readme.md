@@ -19,8 +19,7 @@
 
 In the context of this project, our primary goal is to introduce an interactive and fun way to order cocktails using QR codes. To achieve this, we've designed elegantly crafted QR codes, each tailored to a specific cocktail. These [QR codes](#qr-codes), when scanned, seamlessly guide users to a dedicated [web component](#frontend) containing comprehensive details about the cocktail. From this interface, placing an order is effortless and user-friendly.
 
-To ensure the smooth and effective management of these orders, we've developed a resilient [backend system](#backend). This backend system exposes a series of endpoints that facilitate interaction with our [Cloud Process Execution Engine (CPEE)](#cpee). Following this documentation, you can find detailed information on the specifics of our system's implementation. 
-
+To ensure the smooth and effective management of these orders, we've developed a resilient [backend system](#backend). This backend system exposes a series of endpoints that facilitate interaction with our [Cloud Process Execution Engine (CPEE)](#cpee). Following this documentation, you can find detailed information on the specifics of our system's implementation.
 
 ## How to run
 
@@ -36,12 +35,12 @@ To ensure the smooth and effective management of these orders, we've developed a
 ### descriptions
 
 This folder contains the descriptions of the cocktails in markdown files.
-The currently existsing descriptions have the following pattern:
+The currently existing descriptions have the following pattern:
 
-1. Ingredients: The list of ingredintes of the cocktail.
+1. Ingredients: The list of ingredients of the cocktail.
 2. Description: An extensive description of the cocktail which was generated using the ChatGPT prompt: `Give me a description of the cocktail "Zombie" as it would be displayed in a fancy restaurant`, followed by `Do the same for the cocktail "Caipirinha"` where the name of the cocktail was changed for each cocktail.
 
-While the information on the webpage is usually static, this approach enables for easy fixes or changes even for non-programmers as they only have to change text in a mostly familiar fashon. Moreover, markdown enables the user to highlight certain parts without the need to learn any HTML, CSS or JavaScript.
+While the information on the webpage is usually static, this approach enables for easy fixes or changes even for non-programmers as they only have to change text in a mostly familiar fashion. Moreover, markdown enables the user to highlight certain parts without the need to learn any HTML, CSS or JavaScript.
 
 ### images
 
@@ -61,14 +60,14 @@ This file contains the [CPEE](https://cpee.org/flow/) testset that can be loaded
 
 ## Naming Scheme
 
-When adding cocktails to the menu it is important to follow an nameing scheme.
+When adding cocktails to the menu it is important to follow an naming scheme.
 All [descriptions](#descriptions) have the following naming scheme:
 
 ```
 ${urlSearchParameter}Description.md
 ```
 
-All [images](#images) have the following nameing scheme:
+All [images](#images) have the following naming scheme:
 
 ```
 ${urlSearchParameter}Description.${format}
@@ -88,7 +87,7 @@ To add a cocktail one has to follow these steps:
 
 ## Frontend
 
-The frontend, while minimalistic, consists of all the necessary information and can be seperated into the following 4 components:
+The frontend, while minimalistic, consists of all the necessary information and can be separated into the following 4 components:
 
 1. Image of the Cocktail:
 
@@ -111,22 +110,22 @@ The frontend, while minimalistic, consists of all the necessary information and 
 - Call to Action: The "Order Now" button is the key element that prompts users to take action. It is a clear and direct call to action that encourages users to proceed with their order.
 - Convenience: It streamlines the user experience by offering a direct path to order the cocktail without having to search for how to do so.
 
-After clicking the "Order Now" button the user is propted with an alert showcasing that either they sucessufly ordered the cocktail and assignes them an ID. After a sucessful order the "Order Now" button will no longer be available. If the order was not sucessful the user will get an Error alert, telling them that an error occured and to please try again in a few minutes.
+After clicking the "Order Now" button the user is prompted with an alert showcasing that either they successfully ordered the cocktail and assigns them an ID. After a successful order the "Order Now" button will no longer be available. If the order was not successful the user will get an Error alert, telling them that an error occurred and to please try again in a few minutes.
 
-*The following screenshots illustrate the user workflow in the frontend application. This flow begins with scanning a QR code to order a zombie cocktail and progresses to the cocktail description page.*
+_The following screenshots illustrate the user workflow in the frontend application. This flow begins with scanning a QR code to order a zombie cocktail and progresses to the cocktail description page._
 
 <img src="https://github.com/haysalselen/praktikum/assets/117772399/409b8181-2797-4125-8746-f09f294b33fb" alt="screenshot0" width="280.416666667" height="576.666666667"/>
 <img src="https://github.com/haysalselen/praktikum/assets/117772399/6631218f-a4c8-4c1f-990c-cdd694d47fa0" alt="screenshot1" width="280.416666667" height="576.666666667"/>
 <img src="https://github.com/haysalselen/praktikum/assets/117772399/114d8d7f-e62e-4d4f-9d90-a1e7749ee901" alt="screenshot2" width="280.416666667" height="576.666666667"/>
 
-*When the order is successful, the user will promptly receive their unique order ID, while in the event of any issues, an error message will be displayed.*
+_When the order is successful, the user will promptly receive their unique order ID, while in the event of any issues, an error message will be displayed._
 
 <img src="https://github.com/haysalselen/praktikum/assets/117772399/488128f1-1321-4902-9f47-6e3a1de4ca20" alt="screenshot3" width="280.416666667" height="576.666666667"/>
 <img src="https://github.com/haysalselen/praktikum/assets/117772399/634ef3de-a007-405b-9f6b-b246ff3690e6" alt="screenshot4" width="280.416666667" height="576.666666667"/>
 
 ## Backend
 
-The backend code provides the essential functionality for receiving, processing, and managing cocktail orders. 
+The backend code provides the essential functionality for receiving, processing, and managing cocktail orders.
 
 1. Dependencies: Express is used to create a server, while sqlite3 manages the SQLite database. Cors ensures secure communication between the server and the frontend, allowing requests only from a specific origin (https://lehre.bpm.in.tum.de). Axios is employed for making HTTP requests, and EventEmitter facilitates event-driven programming that is necessary for triggering specific actions in response to arrival of new orders and callback requests from CPEE.
 
@@ -134,27 +133,28 @@ The backend code provides the essential functionality for receiving, processing,
 
 - orders:
 
-| Field Name | Data Type | Description                           |
-|------------|-----------|---------------------------------------|
-| id         | INTEGER   | Unique auto-incrementing order ID    |
-| details    | TEXT      | Description/details of the cocktail  |
-| status     | TEXT      | Order status (defaulted to 'queued', 'processing', 'finished')  |
-| timestamp  | DATETIME  | Timestamp of when the order was created |
+| Field Name | Data Type | Description                                                    |
+| ---------- | --------- | -------------------------------------------------------------- |
+| id         | INTEGER   | Unique auto-incrementing order ID                              |
+| details    | TEXT      | Description/details of the cocktail                            |
+| status     | TEXT      | Order status (defaulted to 'queued', 'processing', 'finished') |
+| timestamp  | DATETIME  | Timestamp of when the order was created                        |
 
 - callbacks:
 
-| Field Name | Data Type | Description                            |
-|------------|-----------|----------------------------------------|
+| Field Name | Data Type | Description                           |
+| ---------- | --------- | ------------------------------------- |
 | id         | INTEGER   | Unique auto-incrementing callback ID  |
 | address    | TEXT      | Callback address for future reference |
-
 
 3. API Routes: The backend exposes several API routes to facilitate various aspects of the cocktail ordering process:
 
 - #### `/order`
+
   This endpoint handles the creation of new cocktail orders. It validates the request checking that the cocktail field is provided. Then, it inserts the order into the database, and triggers the "orderAvailable" event.
 
 - #### `/work-order`
+
   This endpoint is responsible for checking and processing work orders. It checks for open orders in the "orders" table, prioritizing the oldest order based on its timestamp. In the absence of open orders, the route stores the provided callback address in the "callbacks" table for future reference. When an open order is detected, the route updates the order's status to 'processing' and sends the order details as a JSON response.
 
 - #### `/finished/:id`:
@@ -173,11 +173,3 @@ The CPEE graph operates via a sequence of two primary service calls with scripts
 - Following the first one, a [second service call](#finishedid) finalizes the processing of the order and marks it as finished.
 
 <img width="576" alt="cpee-final1" src="https://github.com/haysalselen/praktikum/assets/117772399/106db6c9-d081-4448-8ecc-ce4db1cc08d9">
-
-
-
-
-
-
-
-
